@@ -2,12 +2,7 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.Controller">
    <children>
@@ -19,6 +14,31 @@
                      <children>
                         <HBox alignment="CENTER" layoutX="111.0" layoutY="92.0" prefHeight="367.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
+                              <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Label contentDisplay="CENTER" text="Database name :">
+                                       <VBox.margin>
+                                          <Insets bottom="30.0" top="65.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label contentDisplay="CENTER" layoutX="34.0" layoutY="185.0" text="User name :">
+                                       <VBox.margin>
+                                          <Insets bottom="30.0" top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label contentDisplay="CENTER" layoutX="31.0" layoutY="194.0" text="Password :">
+                                       <VBox.margin>
+                                          <Insets bottom="30.0" top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets right="5.0" />
+                                 </padding>
+                              </VBox>
                               <VBox alignment="CENTER">
                                  <children>
                                     <TextField fx:id="dbname" alignment="CENTER" promptText="Database Name" text="dmdProject">
