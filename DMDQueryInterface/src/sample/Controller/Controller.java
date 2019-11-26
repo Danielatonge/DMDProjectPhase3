@@ -18,15 +18,53 @@ import java.util.List;
 public class Controller {
     @FXML TableView qresult;
     @FXML TextField patientId;
+    @FXML Label status;
+    @FXML TextField dbname;
+    @FXML TextField dbuser;
+    @FXML PasswordField dbpassword;
+    @FXML Tab tbpostgresql;
+    @FXML Tooltip tooltip1;
+    @FXML Tooltip tooltip2;
+    @FXML Tooltip tooltip3;
+    @FXML Tooltip tooltip4;
+    @FXML Tooltip tooltip5;
+
     QueriesImplementation queries;
     Connection conn;
     private ObservableList data;
-    public void initialize() throws SQLException {
+    public void initialize() {
         qresult.setPlaceholder(new Label("No rows to display"));
-        conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dmdProject?allowMultiQueries=true", "postgres", "postgresql");
-        queries = new QueriesImplementation(conn);
-        System.out.println("Opened database successfully");
         qresult.getColumns().clear();
+        tbpostgresql.setDisable(true);
+    }
+
+    private void stabilize() throws SQLException {
+        String user = dbuser.getText();
+        String password = dbpassword.getText();
+        String databaseName = dbname.getText();
+        String url = "jdbc:postgresql://localhost:5432/" + databaseName + "?allowMultiQueries=true";
+        try {
+        conn = DriverManager.getConnection(url, user, password);
+        queries = new QueriesImplementation(conn);
+        status.setText("Database " + databaseName + " opened successfully");
+        } catch (SQLException e){
+            status.setText("Wrong input Credentials | Try again");
+            dbuser.clear();
+            dbpassword.clear();
+            dbname.clear();
+        }
+    }
+
+    @FXML
+    private void onClickConnect() throws SQLException {
+        stabilize();
+        tbpostgresql.setDisable(false);
+        tooltip1.setText("Find all the possible doctors that match given description");
+        tooltip2.setText("Find for each doctor, the total and average number of appointments\n" +
+                "in each time slot of the week during the last year");
+        tooltip3.setText("Find patients who visited the hospital every week, at least twice a week");
+        tooltip4.setText("What would be the income of the hospital in the previous month");
+        tooltip5.setText("Find out the doctors who have attended to at least five patients per year for the last 10 years");
     }
 
     private void updateTableView(int query_number, ResultSet resultSet) throws SQLException {
@@ -54,7 +92,8 @@ public class Controller {
         switch(query_number) {
             case 1:
                 while (resultSet.next()) {
-                    ObjectQueryOne objectQueryOne = new ObjectQueryOne(resultSet.getString(1), resultSet.getString(2));
+                    ObjectQueryOne objectQueryOne = new ObjectQueryOne(resultSet.getString(1), resultSet.getString(2),
+                            resultSet.getString(3), resultSet.getString(4));
                     list.add(objectQueryOne);
                 }
                 break;
@@ -67,7 +106,7 @@ public class Controller {
                 break;
             case 3:
                 while (resultSet.next()) {
-                    ObjectQueryThree objectQueryThree = new ObjectQueryThree(resultSet.getString(1));
+                    ObjectQueryThree objectQueryThree = new ObjectQueryThree(resultSet.getString(1), resultSet.getString(2));
                     list.add(objectQueryThree);
                 }
                 break;
@@ -79,7 +118,7 @@ public class Controller {
                 break;
             case 5:
                 while (resultSet.next()) {
-                    ObjectQueryFive objectQueryFive = new ObjectQueryFive(resultSet.getString(1));
+                    ObjectQueryFive objectQueryFive = new ObjectQueryFive(resultSet.getString(1), resultSet.getString(2));
                     list.add(objectQueryFive);
                 }
                 break;

@@ -12,7 +12,7 @@ public class ObjectQueryTwo {
     public ObjectQueryTwo(String doctorId, String slot, String average, String sum){
         this.doctor_id = doctorId;
         this.slot = slot;
-        this.avg = average;
+        this.avg = average.substring(0, 7);
         this.sum = sum;
     }
 
